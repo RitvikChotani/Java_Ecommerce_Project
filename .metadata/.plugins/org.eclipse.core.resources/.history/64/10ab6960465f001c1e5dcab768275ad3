@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment::page_head('category - Admin Control panel')"></head>
+<body>
+	<!-- Header -->
+	<div th:replace="fragment :: menu"></div>
+
+		<div>
+			<form th:action="@{/categories/save}" method="post"
+				style="max-width: 700px; margin: 0 auto;" th:object="${category}"
+				onSubmit="return checkEmail(this)"
+				enctype="multipart/form-data"
+				>
+				<input type="hidden" th:field="*{image}"/>
+				<div class="border rounded p-3">
+					<input type=hidden th:field="*{id}" id="categoryID" />
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label">First Name</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" th:field="*{name}"
+								required min-length=2 max-length=45 />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label">Last Name</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" th:field="*{lastName}"
+								required min-length=2 max-length=45 />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label">Email</label>
+						<div class="col-sm-8">
+							<input type="email" class="form-control" th:field="*{email}"
+								required min-length=7 max-length=128 />
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label">Password</label>
+
+						<div class="col-sm-8">
+							<input th:if="${category.id==null}" type="password"
+								class="form-control" th:field="*{password}" required
+								min-length=8 max-length=64 /> <input th:if="${category.id != null}"
+								type="password" class="form-control" th:field="*{password}"
+								min-length=8 max-length=64 />
+						</div>
+					</div>
+
+					<br>
+					<div class="form-group row">
+						<label class="col-sm-4 col-form-label">Roles</label>
+						<div class="col-sm-8">
+							<th:block th:each="role : ${listRole}">
+								<input type="checkbox" th:field="*{roles}"
+									th:text="${role.name}" th:value="${role.id}" class="m-2" />
+							- <small>[[${role.description}]]</small>
+								<br>
+							</th:block>
+							<div class="form-group row">
+								<label class="col-sm-4 col-form-label">Enabled</label>
+							</div>
+							<div class="col-sm-8">
+								<input type="checkbox" th:field="*{enabled}" />
+							</div>
+						</div>
+					</div>
+					<br>
+					<div>
+						<div class="form-group row">
+							<label class="col-sm-4 col-form-label">image</label>
+							<div class="col-sm-8">
+								<input type="file" id="image" name = "image" accept="image/png, image/jpeg]" />
+								<img id="thumbnail" class="img-fluid" alt="image Preview" th:src="@{${category.getPhotoImagePath}}" style="width:130px; height:140px;">
+							</div>
+						</div>
+						<div class="text-center">
+							<button class="btn btn-primary m-3">Save</button>
+							<button class="btn btn-secondary" id="button-cancel">Cancel</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal fade text-center" id="modalDialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalTitle">Warning</h4>
+					<button type="button" class="close" data-dismiss="modal">
+						&times;</button>
+				</div>
+				<div class="modal-body">
+					<span id="modalBody"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">
+						Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<div class="text-center">
+		<p>Shopme Control Panel - Copyright &copy Shopme 2021</p>
+	</div>
+</body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#button-cancel").on("click", function() {
+			window.location="[[@{/categories}]]"
+		});
+		
+		$("#image").change(function() {
+			fileSize = this.files[0].size;
+			//alert(fileSize);
+			
+			if(fileSize > 1048576) {
+				this.setCustomValidity("You must choose an image less than 1 MB");
+				this.reportValidity();	
+			} else {
+				showImageThumbnail(this);
+			}
+		});
+		
+	});
+	
+
+	function showImageThumbnail(fileInput) {
+		let file = fileInput.files[0];
+		let reader = new FileReader();
+		
+		reader.onload = function(e) {
+			$("#thumbnail").attr("src", e.target.result);
+		}
+		
+		reader.readAsDataURL(file);
+	}
+	
+	
+	function checkEmail(form) {
+		url = "[[@{/categories/check_email}]]"
+		categoryEmail = $("#email").val();
+		csrf = $("input[name='_csrf']").val();
+				id=$("#categoryID").val();
+		params = {id: id ,email: categoryEmail, _csrf: csrf};
+		
+			$.post(url, params, function(response) {
+			if(response == "OK") { 
+				form.submit();
+			}
+			else if (response == "Duplicate") {
+				showModalDialog("Warning", "the email " + params.email + " is already in use");
+			}
+			
+			else {
+				showModalDialog("Error", "Unknown error occured, try again");
+			}
+			
+		}).fail(function() {
+			showModalDialog("Error", "Could not connect to server");
+		});
+		
+		function showModalDialog(title, message) {
+			$("#modalTitle").text(title);
+			$("#modalBody").text(message);
+			$("#modalDialog").modal();
+		}
+		return false;
+	}
+ </script>
+</html>

@@ -1,0 +1,5 @@
+package com.shopme.admin.repository;
+
+public class CategoryRepository extends PagingAndSortingRepository<Category, Integer>r {
+
+}

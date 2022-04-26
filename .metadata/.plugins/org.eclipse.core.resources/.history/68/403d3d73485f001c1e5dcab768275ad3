@@ -1,0 +1,12 @@
+package com.shopme.admin.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.shopme.admin.repository.CategoryRepository;
+
+@Autowired
+CategoryRepository cateRepo;
+
+public class CategoryService {
+
+}

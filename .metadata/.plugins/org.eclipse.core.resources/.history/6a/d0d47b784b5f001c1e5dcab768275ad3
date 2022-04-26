@@ -1,0 +1,33 @@
+package com.shopme.admin.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.shopme.admin.repository.CategoryRepository;
+import com.shopme.common.entity.Category;
+
+
+@Service
+public class CategoryService {
+	@Autowired
+	CategoryRepository cateRepo;
+	
+	public List<Category> listAll() {
+		return (List<Category>) cateRepo.findAll();
+	}
+	
+	public List<Category> listAllForm() {
+		List<Category> catForm = new ArrayList<>();
+		
+		Iterable<Category> catList = cateRepo.findAll();
+		
+		for(Category cat : catList) {
+		}
+		
+		
+		return (List<Category>) catList;
+	}
+}

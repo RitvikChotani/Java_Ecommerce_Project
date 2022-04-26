@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value=""/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="photos"/>
+			<item value="user"/>
+			<item value="users"/>
+			<item value="Cancel"/>
+			<item value="submit"/>
+			<item value="${keyword} : &apos;&apos;"/>
+			<item value="&apos;keyword=&apos; + "/>
+			<item value=": &apos;fas fa-sort-down&apos;"/>
+			<item value="? &apos;fas fa-sort-up&apos;"/>
+			<item value="{SortDir}"/>
+			<item value="SortDir"/>
+			<item value="System"/>
+			<item value="*"/>
+			<item value="&lt;/tr&gt;"/>
+			<item value="&lt;tr&gt;"/>
+		</list>
+		<list key="replacehistory">
+			<item value="image"/>
+			<item value="category"/>
+			<item value="categories"/>
+			<item value=""/>
+			<item value="keyword : &apos;&apos;"/>
+			<item value="&apos;&amp;keyword=&apos; + "/>
+			<item value="&amp;&apos;keyword=&apos; + "/>
+			<item value=": &apos;fas fa-sort-up&apos;"/>
+			<item value="? &apos;fas fa-sort-down&apos;"/>
+			<item value="{sortDir}"/>
+			<item value="sortDir"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="260"/>
+		<item key="DIALOG_Y_ORIGIN" value="365"/>
+		<item key="DIALOG_WIDTH" value="300"/>
+		<item key="DIALOG_HEIGHT" value="410"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.75|0|WINDOWS|1|-13|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+</section>

@@ -1,0 +1,34 @@
+package com.shopme.admin.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.shopme.admin.repository.CategoryRepository;
+import com.shopme.common.entity.Category;
+
+@Controller
+public class CategoryController {
+
+	@Autowired
+	CategoryRepository cateRepo;
+	
+	@GetMapping("/categories")
+	public String showCategory(Model model) {
+	
+		Iterable<Category> category = cateRepo.findAll();
+		model.addAttribute("categories", category);
+		
+		return "category";
+	}
+	
+	@GetMapping("/categories/new")
+	public String newCategory(Model model) {
+		model.addAttribute("category", new Category());
+		return "category_form";
+	}
+	
+}

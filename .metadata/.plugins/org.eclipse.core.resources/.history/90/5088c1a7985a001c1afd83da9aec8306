@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="fragment::page_head('Error - Admin Control panel')" />
+
+<body>
+	<div class="container-fluid">
+		<!-- Header -->
+		<div th:replace="fragment :: menu"></div>
+		<div>
+			<div class="m-3">
+				<h2>Sorry, the requested page you requested could not be found</h2>
+			</div>
+			
+		</div>
+
+		<!-- Footer -->
+		<div th:replace="fragment :: footer">
+		</div>
+	</div>
+</body>
+
+</html>

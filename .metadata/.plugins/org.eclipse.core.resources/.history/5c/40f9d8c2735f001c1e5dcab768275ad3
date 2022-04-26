@@ -1,0 +1,38 @@
+package com.shopme.admin.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.shopme.admin.repository.CategoryRepository;
+import com.shopme.admin.service.CategoryService;
+import com.shopme.common.entity.Category;
+
+@Controller
+public class CategoryController {
+
+	@Autowired
+	CategoryService catServices;
+	
+	@GetMapping("/categories")
+	public String showCategory(Model model) {
+	
+		List<Category> category = catServices.listAll();
+		model.addAttribute("categories", category);
+		
+		return "category";
+	}
+	
+	@GetMapping("/categories/new")
+	public String newCategory(Model model) {
+		List<Category> categoryList = catServices.listAllForm();
+		model.addAttribute("category", new Category());
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("titie", "Create new Category");
+		return "category_form";
+	}
+	
+}

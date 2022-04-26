@@ -1,0 +1,41 @@
+.icon-white {
+	color: white;
+}
+
+* .icon-red {
+	color: red;
+}
+
+* .icon-green {
+	color: green;
+}
+
+* .icon-gray {
+	color: gray;
+}
+
+@media screen and (min-width:1024px ) {
+	div.less-details {
+		display: none;
+	}
+	
+	th, td .hideable {
+		display:table-cell;	
+	}
+}
+
+@media screen and (min-width:768px) and (max-width:1024px) {
+	div.less-details {
+		display: none;
+	}
+	
+	td .hideable {
+		display:none;	
+	}
+}
+
+@media screen and (max-width:768px) {
+	div.full-details {
+		display: none;
+	}
+}

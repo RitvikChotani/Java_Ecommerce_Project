@@ -1,0 +1,71 @@
+package com.shopme.admin.controller;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.shopme.admin.exception.UserNotFoundException;
+import com.shopme.admin.service.UserService;
+import com.shopme.common.entity.Role;
+import com.shopme.common.entity.User;
+
+@Controller
+public class UserController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@GetMapping("/users")
+	public String listAll(Model model) {
+		
+		List<User> users = userService.listAll();
+		model.addAttribute("users", users);	
+		
+		/*
+		 * Iterator<User> itr = users.iterator(); while(itr.hasNext()) {
+		 * System.out.println(itr.next()); } //System.out.println(user);
+		 */		return "users";
+	}
+	
+	@GetMapping("/users/new")
+	public String newUser(Model model) {
+		List<Role> listRole = userService.listAllRole();
+		User user = new User();
+		model.addAttribute("user", user);
+		model.addAttribute("listRole", listRole);
+		model.addAttribute("title", "Create new user - Admin Control Panel");
+		return "user_form";
+	}
+	
+	@PostMapping("/users/save")
+	public String saveUser(User user, RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute("message", "User saved successfully");
+		userService.saveUser(user);
+		return "redirect:/users";
+	}
+	
+	@GetMapping("/users/edit/{id}")
+	public String editUser(@PathVariable(name="id") Integer id, RedirectAttributes redirectAttributes,
+			Model model) {
+		try {
+			User user = userService.getById(id);
+			model.addAttribute("user",user);
+			List<Role> listRole = userService.listAllRole();
+			model.addAttribute("listRole", listRole);
+			model.addAttribute("title", "Edit user ID(" + id +") - Admin Control Panel");
+			return "user_form";
+		} catch (UserNotFoundException e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+			return "redirect:/users";
+		}
+	}
+	
+	
+}

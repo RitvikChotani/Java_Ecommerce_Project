@@ -1,0 +1,47 @@
+package com.shopme.admin.controller;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.shopme.admin.service.UserService;
+import com.shopme.common.entity.User;
+
+@Controller
+public class UserController {
+	
+	@Autowired
+	private UserService userService;
+	
+	@GetMapping("/users")
+	public String listAll(Model model) {
+		
+		List<User> users = userService.listAll();
+		model.addAttribute("users", users);	
+		
+		Iterator<User> itr = users.iterator();
+		while(itr.hasNext()) {
+			System.out.println(itr.next()); }
+		//System.out.println(user);
+		return "users";
+	}
+	
+	@GetMapping("/users/new")
+	public String newUser(Model model) {
+		User user = new User();
+		model.addAttribute(user);
+		return "user_form";
+	}
+	
+	@PostMapping("/users/save")
+	public String saveUser(User user) {
+		System.out.println(user);
+		return "redirect:/users";
+	}
+	
+}

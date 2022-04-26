@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="fragment::page_head('Home - Admin Control panel')">
+
+</head>
+<body>
+<!-- Header -->
+	
+	
+<!-- Footer -->
+	<div>
+		<p>Shopme Control Panel - Copyright &copy Shopme 2021</p>
+	</div>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#logoutLink").on("click", function(e) {
+				e.preventDefault();
+				document.logoutForm.submit();
+			});
+		});
+	</script>
+</body>
+</html>
